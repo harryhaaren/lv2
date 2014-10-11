@@ -21,16 +21,18 @@ def configure(conf):
     conf.load('compiler_c')
     conf.load('compiler_cxx')
     autowaf.configure(conf)
-    autowaf.display_header('Amp Configuration')
+    autowaf.display_header('SinSynth Configuration')
 
     if conf.env['MSVC_COMPILER']:
         conf.env.append_unique('CFLAGS', ['-TP', '-MD'])
     else:
         conf.env.append_unique('CFLAGS', '-std=c99')
+    
+    conf.env.append_unique('CXXFLAGS', '-fPIC')
 
     if not autowaf.is_child():
         autowaf.check_pkg(conf, 'lv2core', uselib_store='LV2CORE')
-        autowaf.check_pkg(conf, 'ntk', uselib_store='NTK')
+        autowaf.check_pkg(conf, 'ntk', uselib_store='NTK', mandatory=True)
 
     # Set env['pluginlib_PATTERN']
     pat = conf.env['cshlib_PATTERN']
