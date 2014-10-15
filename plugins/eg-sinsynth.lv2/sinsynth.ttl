@@ -22,10 +22,12 @@
 # This is a custom extension, which allows us to tag things easily later
 @prefix guiext: <http://lv2plug.in/ns/extensions/ui#>.
 
+
 <http://lv2plug.in/plugins/eg-sinsynth/gui>
-  a guiext:GtkUI;
+  a guiext:X11UI;
   guiext:binary <sinsynth_gui.so>;
-  guiext:requiredFeature guiext:makeResident.
+  guiext:requiredFeature guiext:makeResident
+.
 
 <http://lv2plug.in/plugins/eg-sinsynth>
   a lv2:Plugin ,
@@ -34,10 +36,10 @@
   doap:name "Sin wave synthesizer";
   doap:license <http://opensource.org/licenses/isc> ;
   lv2:optionalFeature lv2:hardRTCapable ;
-  
+
   # here we say that this plugin has a GUI, and its URI is that
   guiext:ui <http://lv2plug.in/plugins/eg-sinsynth/gui>;
-  
+
   lv2:port [
     a lv2:InputPort ,
       lv2:ControlPort ;
