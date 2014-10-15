@@ -18,14 +18,17 @@
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ev: <http://lv2plug.in/ns/ext/event#>.
 
 # This is a custom extension, which allows us to tag things easily later
 @prefix guiext: <http://lv2plug.in/ns/extensions/ui#>.
 
+
 <http://lv2plug.in/plugins/eg-sinsynth/gui>
-  a guiext:GtkUI;
+  a guiext:X11UI;
   guiext:binary <sinsynth_gui.so>;
-  guiext:requiredFeature guiext:makeResident.
+  guiext:requiredFeature guiext:makeResident
+.
 
 <http://lv2plug.in/plugins/eg-sinsynth>
   a lv2:Plugin ,
@@ -34,10 +37,10 @@
   doap:name "Sin wave synthesizer";
   doap:license <http://opensource.org/licenses/isc> ;
   lv2:optionalFeature lv2:hardRTCapable ;
-  
+
   # here we say that this plugin has a GUI, and its URI is that
   guiext:ui <http://lv2plug.in/plugins/eg-sinsynth/gui>;
-  
+
   lv2:port [
     a lv2:InputPort ,
       lv2:ControlPort ;
@@ -53,4 +56,12 @@
     lv2:index 1 ;
     lv2:symbol "out" ;
     lv2:name "Out"
-  ] .
+  ] , [
+    a lv2:InputPort;
+    a ev:EventPort;
+    lv2:index 2 ;
+    ev:supportsEvent <http://lv2plug.in/ns/ext/midi#MidiEvent>;
+    lv2:symbol "midi";
+    lv2:name "MIDI Input";
+  ]
+.
