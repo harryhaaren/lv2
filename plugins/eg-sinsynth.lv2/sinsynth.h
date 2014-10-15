@@ -1,8 +1,8 @@
 /*
   LV2 Sinewave synth plugin : based on eg-amp
-  
+
   Copyright 2014 Harry van Haaren <harryhaaren@gmail.com>
-  
+
   Permission to use, copy, modify, and/or distribute this software for any
   purpose with or without fee is hereby granted, provided that the above
   copyright notice and this permission notice appear in all copies.
@@ -23,9 +23,39 @@
 #ifndef SIN_SYNTH
 #define SIN_SYNTH
 
-#include "lv2/lv2plug.in/ns/lv2core/lv2.h"
+#include <lv2.h>
+#include <string.h>
+#include "lv2/lv2plug.in/ns/ext/event/event-helpers.h"
+#include "lv2/lv2plug.in/ns/ext/uri-map/uri-map.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <math.h>
 
 #define SINSYNTH_URI "http://lv2plug.in/plugins/eg-sinsynth"
 #define SINSYNTH_UI_URI "http://lv2plug.in/plugins/eg-sinsynth/gui"
+
+#define NUMNOTES 80
+#define BASENOTE 21
+
+#define MIDI_COMMANDMASK 0xF0
+#define MIDI_CHANNELMASK 0x0F
+
+#define MIDI_NOTEON 0x90
+#define MIDI_NOTEOFF 0x80
+#define MIDI_CONTROL 0xB0
+
+
+typedef struct siny_t {
+	float* output;
+	LV2_Event_Buffer *MidiIn;
+	LV2_Event_Iterator in_iterator;
+
+	LV2_Event_Feature* event_ref;
+	int midi_event_id;
+
+	int noteson;
+
+} siny;
 
 #endif
